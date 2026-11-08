@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: ${DB_CONTAINER_NAME:-tut-postgres-db}
+    restart: unless-stopped
+    ports:
+      - "${DB_PORT}:${DB_PORT_DEFAULT}"
+    environment:
+      POSTGRES_DB: ${DB_NAME:-postgres}
+      POSTGRES_USER: ${DB_USER_NAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - tutorial
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: ${PGA_CONTAINER_NAME}
+    restart: unless-stopped
+    ports:
+      - "${PGA_PORT}:${PGA_PORT_DEFAULT}"
+      - "${PGA_HTTP_PORT}:${PGA_HTTP_PORT_DEFAULT}"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - tutorial
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGA_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGA_DEFAULT_PASSWORD}
+      - PGADMIN_CONFIG_SERVER_MODE=False
+
+networks:
+  tutorial:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
