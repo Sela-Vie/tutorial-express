@@ -78,4 +78,12 @@ EOF
 
 ### TODO
 ```
+TODO    research intustry standard file stucture
+TODO    apply relevant industry standard file structure
+
+TODO    create migrations
+TODO    confirm it reflects in database
+
+TODO    create api
+TODO    create documentation for api
 ```
