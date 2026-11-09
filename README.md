@@ -90,10 +90,12 @@ npm install @types/swagger-ui-express @types/js-yaml --save-dev
 ```
 DONE    research intustry standard file stucture
 DONE    apply relevant industry standard file structure
-
 DONE    create migrations
 DONE    confirm it reflects in database
-
 DONE    create api
 DONE    create documentation for api
+
+TODO    create a small front end
+TODO    figure out user tables, auth, login
+TODO    figure out data duplication (import and export)
 ```
