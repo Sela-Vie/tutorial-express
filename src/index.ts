@@ -2,12 +2,14 @@
 
 // Import the express with express name
 import express from 'express';
+import friendRouter from './routes/friend.routes';
+import { errorHandler } from './middleware/error.middleware';
 
 // Initialize the express module with app variable
 const app: express.Application = express();
 
 // Define the port for the application is run
-const port: number = Number(process.env.APP_PORT) || 3000;;
+const port: number = Number(process.env.APP_PORT) || 3000;
 
 // Handle the coming data.
 app.use(express.json());
@@ -21,22 +23,24 @@ app.get('/', (_req, _res): void => {
     });
 });
 
-let fake_db: object[] = [];
-// Handle '/create', path for create user
-app.post('/create', (_req, _res): void => {
-
-    // Fetched the user using body data
-    const user: object = _req.body;
-
-    // Assign the user in fake_db with id as a index
-    fake_db.push(user);
-
+let object_saved: object[] = [];
+app.post('/test', (_req, _res): void => {
+    const object_input: object = _req.body;
+    object_saved.push(object_input);
+    if (object_saved.length > 5){
+        object_saved.pop()
+    }
     _res.json({
         "success": true,
-        "data": fake_db
+        "data": object_saved
     });
 });
 
+// Handle the friend CRUD endpoints.
+app.use('/friends', friendRouter);
+
+// Handle errors after all routes.
+app.use(errorHandler);
 
 // Server the api endpoints.
 app.listen(port, (): void => {

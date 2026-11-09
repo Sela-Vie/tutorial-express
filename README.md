@@ -88,6 +88,6 @@ DONE    apply relevant industry standard file structure
 DONE    create migrations
 DONE    confirm it reflects in database
 
-TODO    create api
-TODO    create documentation for api
+DONE    create api
+DONE    create documentation for api
 ```
