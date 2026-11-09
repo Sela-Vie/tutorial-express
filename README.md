@@ -1,18 +1,19 @@
 ### SUMMARY
-tutorial for me on making a node.js, typescript, express backend
-
+tutorial for me on making 
+- a backend based on [node.js, typescript, express]
+- a database based on [postgres]
 ### SETUP-ON-CLONE
 ```
 npm install
 
-npx tsx watch ./src/index.tsx
+npx tsx watch ./src/index.ts
 # or `npm run dev` if the package.json in configured
 ```
 
 ### STARTUP
 
 ```
-npx tsx watch ./src/index.tsx
+npx tsx watch ./src/index.ts
 # or `npm run dev` if the package.json in configured
 ```
 |term|description|
@@ -20,7 +21,7 @@ npx tsx watch ./src/index.tsx
 |`npx`| runs a package from npm without installing it globally;<br>uses the copy in `node_modules` if there is one |
 |`tsx`| runs TypeScript (and JSX) directly without a compile step;<br>skips type checking, so use `tsc --noEmit` to see type errors |
 |`watch`| restarts the script every time you save a file it uses (can be ommited so the script doesnt restart) |
-|`index.tsx`| the entry file to run |
+|`index.ts`| the entry file to run |
 
 ### DATABASE CONNECTION
 
@@ -66,6 +67,9 @@ cat > tsconfig.json << 'EOF'
   "exclude": ["node_modules"]
 }
 EOF
+
+npm install dotenv  --save-dev
+npm install node-pg-migrate --save-dev
 ```
 |term|description|
 |-|-|

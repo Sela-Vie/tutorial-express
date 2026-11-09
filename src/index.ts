@@ -1,4 +1,4 @@
-//index.js
+//index.ts
 
 // Import the express with express name
 import express from 'express';
