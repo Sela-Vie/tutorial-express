@@ -45,7 +45,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
         id: 'id',
         user_id: {
             type: 'integer',
-            notNull: true,
+            notNull: false,     // temporarily false, so I dont have to deal with login and user when playing with the friend table
             references: '"users"',
             onDelete: 'CASCADE',
         },

@@ -68,8 +68,8 @@ cat > tsconfig.json << 'EOF'
 }
 EOF
 
-npm install dotenv  --save-dev
-npm install node-pg-migrate --save-dev
+npm install node-pg-migrate dotenv pg  --save-dev
+npm install @types/pg --save-dev
 ```
 |term|description|
 |-|-|
@@ -82,11 +82,11 @@ npm install node-pg-migrate --save-dev
 
 ### TODO
 ```
-TODO    research intustry standard file stucture
-TODO    apply relevant industry standard file structure
+DONE    research intustry standard file stucture
+DONE    apply relevant industry standard file structure
 
-TODO    create migrations
-TODO    confirm it reflects in database
+DONE    create migrations
+DONE    confirm it reflects in database
 
 TODO    create api
 TODO    create documentation for api
