@@ -2,8 +2,10 @@
 
 // Import the express with express name
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 import friendRouter from './routes/friend.routes';
 import { errorHandler } from './middleware/error.middleware';
+import { openApiSpec } from './config/openapi';
 
 // Initialize the express module with app variable
 const app: express.Application = express();
@@ -35,6 +37,13 @@ app.post('/test', (_req, _res): void => {
         "data": object_saved
     });
 });
+
+// Serve the OpenAPI document and Swagger UI.
+app.get('/openapi.json', (_req, _res): void => {
+    _res.json(openApiSpec);
+});
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(openApiSpec));
 
 // Handle the friend CRUD endpoints.
 app.use('/friends', friendRouter);

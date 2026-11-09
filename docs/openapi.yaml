@@ -1,0 +1,270 @@
+openapi: 3.0.3
+info:
+  title: Tutorial Express API
+  version: 1.0.0
+  description: Express 5, TypeScript, and PostgreSQL tutorial API.
+tags:
+  - name: Friends
+    description: Friend CRUD endpoints
+servers:
+  - url: http://localhost:3100
+    description: Local development server
+paths:
+  /openapi.json:
+    get:
+      tags:
+        - Default
+      summary: Get this yaml file in json format
+      responses:
+        '200':
+          description: API information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+  /docs:
+    get:
+      tags:
+        - Default
+      summary: Returns the swagger frontend api documentation
+      responses:
+        '200':
+          description: API information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+  /:
+    get:
+      tags:
+        - Default
+      summary: Get basic API information
+      responses:
+        '200':
+          description: API information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  path:
+                    type: string
+                  work:
+                    type: string
+  /friends:
+    get:
+      tags:
+        - Friends
+      summary: List friends
+      responses:
+        '200':
+          description: Friends list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Friend'
+    post:
+      tags:
+        - Friends
+      summary: Create a friend
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFriendRequest'
+      responses:
+        '201':
+          description: Created friend
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Friend'
+        '400':
+          description: Invalid input or missing user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /friends/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+    get:
+      tags:
+        - Friends
+      summary: Get one friend
+      responses:
+        '200':
+          description: Friend
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Friend'
+        '400':
+          description: Invalid friend id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Friend not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags:
+        - Friends
+      summary: Update a friend
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFriendRequest'
+      responses:
+        '200':
+          description: Updated friend
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Friend'
+        '400':
+          description: Invalid input or missing user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Friend not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - Friends
+      summary: Delete a friend
+      responses:
+        '200':
+          description: Deletion result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: 'null'
+        '404':
+          description: Friend not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Friend:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+          nullable: true
+        name_identifier:
+          type: string
+          maxLength: 200
+        name_full:
+          type: string
+          nullable: true
+          maxLength: 200
+        description:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    CreateFriendRequest:
+      type: object
+      required:
+        - name_identifier
+      properties:
+        user_id:
+          type: integer
+          nullable: true
+          minimum: 1
+        name_identifier:
+          type: string
+          minLength: 1
+          maxLength: 200
+        name_full:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 200
+        description:
+          type: string
+          nullable: true
+    UpdateFriendRequest:
+      type: object
+      minProperties: 1
+      properties:
+        user_id:
+          type: integer
+          nullable: true
+          minimum: 1
+        name_identifier:
+          type: string
+          minLength: 1
+          maxLength: 200
+        name_full:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 200
+        description:
+          type: string
+          nullable: true
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string

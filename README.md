@@ -49,6 +49,7 @@ related topics include
 
 ### SETUP-INITIAL
 ```
+# initial config
 npm install express
 npm install @types/express --save-dev
 npm install typescript tsx @types/node --save-dev
@@ -68,8 +69,13 @@ cat > tsconfig.json << 'EOF'
 }
 EOF
 
+# database
 npm install node-pg-migrate dotenv pg  --save-dev
 npm install @types/pg --save-dev
+
+# openAPI
+npm install swagger-ui-express js-yaml
+npm install @types/swagger-ui-express @types/js-yaml --save-dev
 ```
 |term|description|
 |-|-|
